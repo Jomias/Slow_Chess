@@ -1,7 +1,8 @@
 from prettytable import PrettyTable, ALL
-
 from constants import *
 from numba.experimental import jitclass
+
+
 position_type = [
     ("bit_boards", nb.uint64[:, :]),
     ("occupancies", nb.uint64[:]),

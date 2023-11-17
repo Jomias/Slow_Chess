@@ -15,9 +15,8 @@ class GameController:
     def __init__(self):
         self.game_board = DisplayBoard()
         self.ai = Stupid()
-        search(self.ai, self.game_board.pos, time_limit=5000)
+        search(self.ai, self.game_board.pos, time_limit=3000)
         self.game_type = USER
-        self.is_piece_selected = False
         self.selected_square = None
         self.user_color = WHITE
         self.difficulty = EASY
@@ -27,6 +26,7 @@ class GameController:
         self.sound = Sound()
 
     def play(self):
+        self.selected_square = None
         self.game_board.reset_board()
         if self.game_type == USER:
             self.play_user()
@@ -42,7 +42,6 @@ class GameController:
                 window = Tk()
                 window.eval('tk::PlaceWindow %s center' % window.winfo_toplevel())
                 window.withdraw()
-                window.geometry("500x200")
                 if self.game_board.pos.state == DRAW or self.game_board.pos.state == STALEMATE:
                     messagebox.showinfo("Game ended", "Draw !")
                 if self.game_board.pos.state == CHECKMATE:
@@ -101,7 +100,6 @@ class GameController:
                 window = Tk()
                 window.eval('tk::PlaceWindow %s center' % window.winfo_toplevel())
                 window.withdraw()
-                window.geometry("500x200")
                 if self.game_board.pos.state == DRAW or self.game_board.pos.state == STALEMATE:
                     messagebox.showinfo("Game ended", "Draw !")
                 if self.game_board.pos.state == CHECKMATE:
@@ -127,7 +125,7 @@ class GameController:
                     if self.difficulty == MEDIUM:
                         search(self.ai, self.game_board.pos, node_limit=2000)
                     elif self.difficulty == HARD:
-                        search(self.ai, self.game_board.pos, time_limit=5000)
+                        search(self.ai, self.game_board.pos, time_limit=3000)
                     move = random_move(self.game_board.pos) if self.difficulty == EASY else Move(self.ai.pv_table[0][0])
                     self.game_board.pos = apply_move(self.game_board.pos, move)
                     self.game_board.last_move = (move.source, move.target)

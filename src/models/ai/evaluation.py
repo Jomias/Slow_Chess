@@ -11,6 +11,7 @@ def get_game_phase_score(pos):
             score = count_bits(pos.bit_boards[color][piece]) * material_score[opening][color][piece]
     return score
 
+
 @njit
 def evaluate(pos: Position) -> int:
     game_phase_score = get_game_phase_score(pos)
